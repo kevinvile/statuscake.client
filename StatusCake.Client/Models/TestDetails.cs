@@ -115,5 +115,10 @@ namespace StatusCake.Client.Models
         /// The amount of consecutive downtimes recorded for this test
         /// </summary>
         public int DownTimes { get; set; }
+
+        /// <summary>
+        /// The Uri to be tested
+        /// </summary>
+        public string URI { get; set; }
     }
 }
