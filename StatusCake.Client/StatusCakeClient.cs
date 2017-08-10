@@ -96,7 +96,7 @@ namespace StatusCake.Client
         /// <returns></returns>
         public async Task<List<Test>> GetTestsAsync()
         {
-            return await this.GetTestsAsync(null, null);
+            return await this.GetTestsAsync(new NameValueCollection());
         }
 
         /// <summary>
@@ -119,7 +119,28 @@ namespace StatusCake.Client
                 parameters.Add("Status", status);
             }
 
+            return await this.GetTestsAsync(parameters);            
+        }
 
+        /// <summary>
+        /// Get the list of all the tests in the client optionally filtered by a list of tag
+        /// </summary>
+        /// <param name="tags">Filter to just the tests which contain all of the provided tags</param>
+        /// <returns></returns>
+        public async Task<List<Test>> GetTestsAsync(List<string> tags)
+        {
+            var parameters = new NameValueCollection();
+            // Filter by tag
+            if (tags != null && tags.Count > 0)
+            {
+                parameters.Add("tags", string.Join(",", tags));
+            }
+
+            return await this.GetTestsAsync(parameters);
+        }
+
+        private async Task<List<Test>> GetTestsAsync(NameValueCollection parameters)
+        {
             var request = this.GetAuthenticationRequest(StatusCakeEndpoints.Tests, "GET", parameters);
             using (var response = (HttpWebResponse)await request.GetResponseAsync())
             {
