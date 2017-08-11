@@ -14,7 +14,7 @@ namespace StatusCake.Client.Models
         /// <summary>
         /// A list of human readable reasons returned by the API
         /// </summary>
-        public List<string> Issues { get; set; }
+        public Dictionary<string,string> Issues { get; set; }
 
         /// <summary>
         /// True if the update was successful
